@@ -161,6 +161,10 @@ export const picpost = function (url, data) {
     return innerPost(url, data);
 };
 
+export const filepost = function (url, data) {
+    return innerPost(url, data);
+};
+
 export const post = function (url, data) {
     return innerPost(url, data, {
         headers: {

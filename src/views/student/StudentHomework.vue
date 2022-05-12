@@ -12,11 +12,11 @@
             <div class="query-form">
                 <el-row :gutter="20">
                     <el-col :offset="15" :span="3">
-                        <el-input @keyup.enter.native="query" onkeyup="value=value.replace(/[^\d]/g,'')"
-                                  placeholder="作业编号" v-model="queryForm.homeworkId"/>
+                        <el-input @keyup.enter.native="query"
+                                  placeholder="科目" v-model="queryForm.course"/>
                     </el-col>
                     <el-col :span="3">
-                        <el-input @keyup.enter.native="query" placeholder="作业标题" v-model="queryForm.homeworkTitle"/>
+                        <el-input @keyup.enter.native="query" placeholder="教师" v-model="queryForm.teacherName"/>
                     </el-col>
                     <el-col :span="3">
                         <el-button @click="query" icon="el-icon-search" type="primary">搜索</el-button>
@@ -28,31 +28,37 @@
                 <p></p>
             </div>
 
-            <el-row justify="center" type="flex">
-                <el-pagination
-                        :current-page.sync="pageIndex"
-                        :page-size="pageSize"
-                        :total="pageSize * pageCount"
-                        @current-change="getPage"
-                        background
-                        layout="prev, pager, next"
-                >
-                </el-pagination>
-            </el-row>
-
+          <el-row justify="center" type="flex">
+            <el-pagination
+                :current-page.sync="pageIndex"
+                :page-sizes="[5,10,15,20]"
+                :page-size="pageSize"
+                :total="total"
+                @current-change="handlePageChange"
+                @size-change="handleSizeChange"
+                background
+                layout="total,sizes,prev, pager, next"
+            >
+            </el-pagination>
+          </el-row>
             <div>
                 <p></p>
             </div>
 
             <div class="table">
                 <el-table :data="tableData" stripe>
-                    <el-table-column label="作业编号" prop="homeworkId"/>
-                    <el-table-column label="教师" prop="teacherName"/>
-                    <el-table-column label="作业标题" prop="homeworkTitle"/>
-                    <el-table-column label="作业内容" prop="homeworkContent" width="200px"/>
+                    <el-table-column label="作业编号" prop="id"/>
+                    <el-table-column label="课程" prop="course"/>
+                    <el-table-column label="班级" prop="clazzId"/>
+                    <el-table-column label="教师" prop="teacherId"/>
+                    <el-table-column label="开始时间" prop="stime"/>
+                    <el-table-column label="结束时间" prop="etime"/>
+                    <el-table-column label="作业类型" prop="type"/>
+                    <el-table-column label="作业文件" prop="filename"/>
+                    <el-table-column label="作业内容" prop="text"/>
                     <el-table-column align="center" label="操作" width="200px">
-                        <template slot-scope="scope">
-                            <el-button @click="editStudentHomework(scope.row.homeworkId)" size="mini" type="success">
+                        <template slot-scope="">
+                            <el-button  size="mini" type="success">
                                 提交作业
                             </el-button>
                         </template>
@@ -79,7 +85,7 @@
                     </el-form-item>
                 </el-form>
                 <span class="dialog-footer" slot="footer">
-                    <el-button @click="save" type="primary">确 定</el-button>
+                    <el-button  type="primary">确 定</el-button>
                     <el-button @click="editing = false">取 消</el-button>
                 </span>
             </el-dialog>
@@ -88,50 +94,48 @@
 </template>
 
 <script>
-    import * as homeworkApi from "@/api/student/homework";
+import * as homeworkApi from "@/api/student/homework";
 
-    export default {
+export default {
         name: "StudentHomework",
         data() {
             return {
-                queryForm: {
-                    homeworkId: "",
-                    homeworkTitle: ""
-                },
-                entityForm: {},
-                tableData: [],
-                pageSize: homeworkApi.pageSize,
-                pageCount: 1,
-                pageIndex: 1,
-                editing: false
+              queryForm: {
+                  course: "",
+                  teacherName: ""
+              },
+              studentId : this.$store.state.status.userId,
+
+              entityForm: {},
+
+              tableData: [],
+              pageSize: 5,
+              total: 0,
+              pageIndex: 1,
+              editing: false
             };
         },
         methods: {
-            query() {
-                homeworkApi.getPageCount(this.queryForm.homeworkId, this.queryForm.homeworkTitle).then(res => {
-                    this.pageCount = res;
-                    this.pageIndex = 1;
-                    this.getPage(1);
-                });
-            },
-            getPage(pageIndex) {
-                homeworkApi.getPage(pageIndex, this.queryForm.homeworkId, this.queryForm.homeworkTitle).then(res => {
-                    this.tableData = res;
-                });
-            },
-            editStudentHomework(homeworkId) {
-                homeworkApi.getHomework(homeworkId).then(res => {
-                    this.entityForm = res;
-                    this.editing = true;
-                })
-            },
-            save() {
-                homeworkApi.submitHomework(this.entityForm).then(() => {
-                    this.$message.success("成功");
-                    this.getPage(this.pageIndex);
-                    this.editing = false;
-                });
-            }
+          query() {
+            homeworkApi.getPage(this.pageIndex,this.pageSize).then(res =>{
+              this.total = res.result.total;
+              this.tableData = res.result.data
+              // console.log(res.result.data)
+            })
+          },
+          handlePageChange(pageIndex) {
+            homeworkApi.getPage(pageIndex,this.pageSize,this.queryForm.course,this.queryForm.teacherName).then(res => {
+              this.total = res.result.total;
+              this.tableData = res.result.data
+            });
+          },
+          handleSizeChange(pageSize){
+            homeworkApi.getPageSize(pageSize,this.queryForm.course,this.queryForm.teacherName).then(res=>{
+              this.total = res.result.total;
+              this.tableData = res.result.data
+            })
+          },
+
         },
         created() {
             this.query();

@@ -53,31 +53,31 @@ SideBarItem.items = [
         userType: UserType.teacher
     },
     {
-        icon: "el-icon-fa fa-thumbs-up",
+        icon: "el-icon-house",
         index: "/admin",
         title: "管理员首页",
         userType: userType.admin
     },
     {
-        icon: "el-icon-fa fa-thumbs-up",
+        icon: "el-icon-user-solid",
         index: "/admin/student",
         title: "学生管理",
         userType: userType.admin
     },
     {
-        icon: "el-icon-fa fa-thumbs-up",
+        icon: "el-icon-s-custom",
         index: "/admin/teacher",
         title: "教师管理",
         userType: userType.admin
     },
     {
-        icon: "el-icon-fa fa-thumbs-up",
+        icon: "el-icon-s-management",
         index: "/admin/course",
         title: "课程管理",
         userType: userType.admin
     },
     {
-        icon: "el-icon-fa fa-thumbs-up",
+        icon: "el-icon-s-order",
         index: "/admin/clazz",
         title: "班级管理",
         userType: userType.admin

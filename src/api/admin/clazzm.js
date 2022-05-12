@@ -17,3 +17,8 @@ export const addClazzCourse = (clazz,course,teacher) => axios.put("/admin/clazzm
     course: course,
     teacher: teacher
 })
+
+export const addClazz = (clazzId,clazzName) => axios.put("/admin/clazzm/add",{
+    clazzId:clazzId,
+    clazzName:clazzName
+})

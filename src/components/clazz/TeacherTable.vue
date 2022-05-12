@@ -194,7 +194,7 @@
 
 <script>
 import * as teacherApi from "@/api/admin/teacherm";
-import * as picApi from "@/api/admin/pic";
+import * as picApi from "@/api/admin/file";
 import {isvalidPhone} from "@/utils/validate";
 import {getCourse} from "@/api/admin/coursem";
 

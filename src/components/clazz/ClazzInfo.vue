@@ -1,6 +1,7 @@
 <template>
   <div class="home-wrap">
   <div class="container">
+    <el-button @click="addV =true" icon="el-icon-plus" type="primary">添加班级</el-button>
     <div class="query-form">
       <el-row :gutter="20">
         <el-col :offset="15" :span="3">
@@ -50,6 +51,30 @@
       </el-table>
     </div>
   </div>
+
+    <el-dialog :visible.sync="addV" title="添加班级" width="50%">
+      <el-form :model="entityForm"  :rules="rules" label-width="82px" ref="form">
+        <el-form-item label="班级ID" prop="clazzId">
+          <el-input v-model="entityForm.clazzId"></el-input>
+        </el-form-item>
+        <el-form-item label="班级名称" prop="clazzName">
+          <el-input v-model="entityForm.clazzName"></el-input>
+        </el-form-item>
+      </el-form>
+      <span class="dialog-footer" slot="footer">
+            <el-popconfirm
+                confirm-button-text='确认'
+                cancel-button-text='取消'
+                icon="el-icon-info"
+                icon-color="red"
+                title="确认添加？"
+                @confirm="save"
+            >
+               <el-button type="primary" slot="reference">确 定</el-button>
+            </el-popconfirm>
+               <el-button @click="addDialogClose">取 消</el-button>
+        </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -64,14 +89,14 @@ export default {
         clazzName: "",
       },
       entityForm: {
-        name: '',
-        score: ''
+        clazzId: '',
+        clazzName: ''
       },rules: {
-        name: [
-          { required: true, message: '请输入学科名', trigger: 'blur' },
+        clazzId: [
+          { required: true, message: '请输入班级ID', trigger: 'blur' },{max:6, min:6,message: '请输入6位id',trigger: 'blur'}
         ],
-        score: [
-          {required:true,message: '请输入学科分值', trigger: 'blur'}
+        clazzName: [
+          {required:true,message: '请输入班级名称', trigger: 'blur'}
         ]
       },
       tableData: [],
@@ -104,7 +129,33 @@ export default {
     manage(clazzId){
       // console.log(clazzId)
       this.$router.push({name: 'admin-clazz-detail',params: {clazzId: clazzId}})
-    }
+    },
+    save() {
+      // console.log("save")
+      this.$refs.form.validate(valid=>{
+        if (valid){
+          // console.log(this.entityForm)
+          clazzApi.addClazz(this.entityForm.clazzId,this.entityForm.clazzName).then(res => {
+            if (res.code === 200){
+              this.$message.success(res.message)
+              this.addDialogClose()
+              this.query()
+            }else {
+              this.$message.error(res.message)
+            }
+          })
+        }else {
+          // console.log('error submit!!');
+          return false;
+        }
+      })
+    },
+
+    addDialogClose(){
+      this.$refs.form.resetFields()
+      // console.log(this.$refs.upload)
+      this.addV =false
+    },
   },
   created() {
     this.query();

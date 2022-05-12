@@ -1,23 +1,29 @@
 import * as axios from "@/common/myAxios";
 
-export const addHomework = homework => axios.post("/teacher/homework", homework);
+export const getTeacher = (id) => axios.get("/teacher",{
+    id:id
+})
 
-export const deleteHomework = homeworkId => axios.pureDelete("/teacher/homework/" + homeworkId);
+export const getTeacherClazz = id => axios.get("/teacher/clazz",{
+    id:id
+})
 
-export const updateHomework = homework => axios.put("/teacher/homework", homework);
+export const publishHomework = homework => axios.put("/teacher/publish",homework)
 
-export const getHomework = homeworkId => axios.get("/teacher/homework/" + homeworkId);
+export const deleteHomework = homeworkId => axios.del("/teacher/homework/"+homeworkId)
 
-export const getPage = (index, homeworkId, homeworkTitle) =>
-    axios.get("/teacher/homework/page/" + index, {
-        homeworkId: homeworkId,
-        homeworkTitle: homeworkTitle,
-    });
+export const updateHomework = homework => axios.put("/teacher/homeworkupdate",homework)
 
-export const getPageCount = (homeworkId, homeworkTitle) =>
-    axios.get("/teacher/homework/page/count", {
-        homeworkId: homeworkId,
-        homeworkTitle: homeworkTitle,
-    });
+export const getPageSize = (size,clazzId,type,teacherId) => axios.get("/teacher/homework/page",{
+    size : size,
+    clazzId : clazzId,
+    type : type,
+    teacherId: teacherId
+})
 
-export const pageSize = 7;
+export const getPage = (index,size,clazzId,type,teacherId) => axios.get("/teacher/homework/page/"+index,{
+    size : size,
+    clazzId : clazzId,
+    type : type,
+    teacherId: teacherId
+})

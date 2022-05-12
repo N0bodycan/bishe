@@ -187,7 +187,7 @@
 <script>
 import * as studentmApi from "@/api/admin/studentm";
 import * as clazzmApl from "@/api/admin/clazzm";
-import * as picApi from "@/api/admin/pic";
+import * as picApi from "@/api/admin/file";
 import { isvalidPhone } from '@/utils/validate'
 import {deleteStudent, resetPassword} from "@/api/admin/studentm";
 // import Config from "@/common/config";

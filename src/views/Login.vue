@@ -62,7 +62,7 @@ export default {
         },
         methods: {
             login() {
-                console.log(this.formData.userType)
+                // console.log(this.formData.userType)
                 this.$refs.form.validate(valid => {
                     if (valid) {
                       if (this.formData.userType === '1'){

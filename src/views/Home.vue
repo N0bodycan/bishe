@@ -11,9 +11,9 @@
         <div class="main-wrap">
             <el-container class="main-container">
                 <div class="introduction-container">
-                    <p>
+                    <h1 align="center">
                         欢迎来到作业管理系统！
-                    </p>
+                    </h1>
 
                 </div>
             </el-container>
@@ -51,5 +51,9 @@
 
     .introduction-container {
         font-size: 16px;
+        background-image: url("../assets/login-background.jpg");
+        background-size:cover;
+        width: 100%;
+        height: 100%;
     }
 </style>
