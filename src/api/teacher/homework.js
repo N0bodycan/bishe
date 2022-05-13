@@ -27,3 +27,19 @@ export const getPage = (index,size,clazzId,type,teacherId) => axios.get("/teache
     type : type,
     teacherId: teacherId
 })
+
+export const getSHPageSize = (size,homeworkId,studentName,teacherId) => axios.get("/teacher/studenthomework/page",{
+    size : size,
+    homeworkId : homeworkId,
+    studentName : studentName,
+    teacherId: teacherId
+})
+
+export const getSHPage = (index,size,homeworkId,studentName,teacherId) => axios.get("/teacher/studenthomework/page/"+index,{
+    size : size,
+    homeworkId : homeworkId,
+    studentName : studentName,
+    teacherId: teacherId
+})
+
+export const commentHomework = score => axios.put("/teacher/comment",score)

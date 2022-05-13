@@ -160,7 +160,6 @@ export default {
       const isLt2M = file.size / 1024 / 1024 < 10;
       if (!isLt2M) {
         this.$message.error('上传文件大小不能超过10MB!');
-        this.entityForm.photo = ""
       }
       return  isLt2M;
     },

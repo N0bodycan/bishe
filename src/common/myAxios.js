@@ -9,7 +9,7 @@ export const vueInstance = {
 };
 
 
-const axiosInstance = axios.create({
+export const axiosInstance = axios.create({
     baseURL: Config.serverUrl,
     timeout: 30000,
     withCredentials: true,
@@ -157,9 +157,16 @@ export const get = function (url, params) {
     });
 };
 
+export const fileget = function (url, params) {
+    return innerGet(url, {
+        params: params
+    },{responseType:'blob'});
+};
+
 export const picpost = function (url, data) {
     return innerPost(url, data);
 };
+
 
 export const filepost = function (url, data) {
     return innerPost(url, data);

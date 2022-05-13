@@ -27,11 +27,11 @@ export default {
         methods: {
             redirectHome(userType) {
                 if (userType === UserType.student) {
-                    this.$router.push({name: "student-home"});
+                    this.$router.push("/student");
                 } else if (userType === UserType.teacher) {
-                    this.$router.push({name: "teacher-home"});
+                    this.$router.push("/teacher");
                 }else if (userType === UserType.admin){
-                  this.$router.push({name: "admin-home"});
+                  this.$router.push("/admin");
                 }
             }
         },

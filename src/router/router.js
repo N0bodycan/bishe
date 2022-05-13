@@ -19,6 +19,8 @@ import clazzInfo from "@/components/clazz/ClazzInfo";
 import studentTable from "@/components/clazz/StudentTable";
 import teacherTable from "@/components/clazz/TeacherTable";
 import courseTable from "@/components/clazz/CourseTable";
+import SHomeworkNow from "@/components/SHomework/SHomeworkNow";
+import SHomeworkHistory from "@/components/SHomework/SHomeworkHistory";
 
 Vue.use(VueRouter);
 
@@ -36,7 +38,19 @@ const routes = [
             {
                 path: "/student/homework",
                 name: "student-homework",
-                component: StudentHomework
+                component: StudentHomework,
+                children: [
+                    {
+                    path: "/student/homework/now",
+                    name: "student-homework-now",
+                    component: SHomeworkNow,
+                    },
+                    {
+                        path: "/student/homework/history",
+                        name: "student-homework-history",
+                        component: SHomeworkHistory,
+                    },
+                ]
             },
             {
                 path: "/student/submitted",
