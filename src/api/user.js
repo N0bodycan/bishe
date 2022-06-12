@@ -25,3 +25,21 @@ export const logout = () => {
     localStorage.removeItem("Authorization");
     localStorage.removeItem("vuex")
 };
+
+export const studentChangePassword = (id,op,np) => post("/student/changepwd",{
+    id: id,
+    op: op,
+    np: np
+})
+
+export const teacherChangePassword = (id,op,np) => post("/teacher/changepwd",{
+    id: id,
+    op: op,
+    np: np
+})
+
+export const adminChangePassword = (id,op,np) => post("/admin/changepwd",{
+    id: id,
+    op: op,
+    np: np
+})

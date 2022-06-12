@@ -81,7 +81,7 @@
                 </el-table>
             </div>
 
-            <el-dialog :before-close="addDialogClose" :visible.sync="edit" title="添加学生" width="50%">
+            <el-dialog :before-close="addDialogClose" :visible.sync="edit" title="修改作业" width="50%">
               <el-form :model="ruleForm" ref="form" label-width="100px" class="demo-ruleForm">
               <el-form-item label="学科">
                 <el-input style="width: 50%" disabled v-model="ruleForm.course"></el-input>
